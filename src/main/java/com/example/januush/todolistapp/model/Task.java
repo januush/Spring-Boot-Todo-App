@@ -1,6 +1,7 @@
 package com.example.januush.todolistapp.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "tasks")
@@ -8,6 +9,7 @@ public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @NotBlank(message = "Task's description must not be null")
     private String description;
     private boolean done;
 
