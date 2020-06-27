@@ -7,9 +7,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.List;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
@@ -37,5 +41,11 @@ class TaskController {
 	ResponseEntity<List<Task>> readAllTasks(Pageable pageable) {
 		logger.info("Custom pageable");
 		return ResponseEntity.ok(repository.findAll(pageable).getContent());
+	}
+
+	@PutMapping("/tasks/{id}")
+	ResponseEntity<?> updateTask(@RequestBody @Valid Task taskToUpdate) {
+		repository.save(taskToUpdate);
+		return ResponseEntity.noContent().build();
 	}
 }
