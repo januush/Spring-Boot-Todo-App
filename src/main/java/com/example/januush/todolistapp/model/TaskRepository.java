@@ -14,6 +14,8 @@ public interface TaskRepository {
 
     Optional<Task> findById(Integer id); //TODO may not find any task exception
 
+    boolean existsById(Integer id);
+
     Task save(Task entity);
 
     List<Task> findByDone(@Param("state") boolean done);

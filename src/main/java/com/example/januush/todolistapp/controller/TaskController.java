@@ -8,13 +8,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Optional;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -43,9 +43,29 @@ class TaskController {
 		return ResponseEntity.ok(repository.findAll(pageable).getContent());
 	}
 
+	@GetMapping("/tasks/{id}")
+	ResponseEntity<Task> readOneTask(@PathVariable("id") int taskId) {
+		logger.info("Exposing one task");
+		return repository.findById(taskId)
+				.map(ResponseEntity::ok)
+				.orElse(ResponseEntity.notFound().build());
+	}
+
 	@PutMapping("/tasks/{id}")
-	ResponseEntity<?> updateTask(@RequestBody @Valid Task taskToUpdate) {
+	ResponseEntity<?> updateTask(@PathVariable("id") int taskId, @RequestBody @Valid Task taskToUpdate) {
+		logger.info("Updating one task");
+		if (!repository.existsById(taskId)) {
+			return ResponseEntity.notFound().build();
+		}
+		taskToUpdate.setId(taskId);
 		repository.save(taskToUpdate);
 		return ResponseEntity.noContent().build();
+	}
+
+	@PostMapping("/tasks")
+	ResponseEntity<Task> createTask(@RequestBody @Valid Task taskToAdd) throws URISyntaxException {
+		logger.info("Creating new task");
+		Task result = repository.save(taskToAdd);
+		return ResponseEntity.created(URI.create("/" + result.getId())).body(result);
 	}
 }
