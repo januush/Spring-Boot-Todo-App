@@ -1,6 +1,0 @@
-spring:
-  h2.console:
-    enabled: true
-  datasource:
-    url: 'jdbc:h2:file:/F:/spring-todo/todo-list-app/tasks-db'
-task.allowMultipleTasksFromTemplate: false
