@@ -2,6 +2,7 @@ package com.example.januush.todolistapp.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "tasks")
@@ -12,8 +13,10 @@ public class Task {
 	@NotBlank(message = "Task description must not be null")
 	private String description;
 	private boolean done;
+	private LocalDateTime deadline;
 
 	Task() {
+		// Empty constructor used by Hibernate to create single Entity
 	}
 
 	public int getId() {
@@ -36,7 +39,15 @@ public class Task {
 		return done;
 	}
 
-	void setDone(boolean done) {
+	public void setDone(boolean done) {
 		this.done = done;
+	}
+
+	public LocalDateTime getDeadline() {
+		return deadline;
+	}
+
+	void setDeadline(final LocalDateTime deadline) {
+		this.deadline = deadline;
 	}
 }
