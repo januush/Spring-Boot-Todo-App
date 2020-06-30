@@ -2,6 +2,7 @@ package com.example.januush.todolistapp.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.Set;
 
 @Entity
 @Table(name = "tasks")
@@ -14,6 +15,8 @@ public class TaskGroup {
     private boolean done;
     @Embedded
     private Audit audit = new Audit(); // inject updatedOn and createdOn fields with @Embedded
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "group", fetch = FetchType.LAZY) // "group" from Task.class
+    private Set<Task> tasks;
 
     TaskGroup() {
         // Empty constructor used by Hibernate to create single Entity
@@ -41,5 +44,13 @@ public class TaskGroup {
 
     public void setDone(boolean done) {
         this.done = done;
+    }
+
+    public Set<Task> getTasks() {
+        return tasks;
+    }
+
+    void setTasks(final Set<Task> tasks) {
+        this.tasks = tasks;
     }
 }
