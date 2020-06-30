@@ -5,7 +5,7 @@ import javax.validation.constraints.NotBlank;
 import java.util.Set;
 
 @Entity
-@Table(name = "tasks")
+@Table(name = "task_groups")
 public class TaskGroup {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,8 +13,6 @@ public class TaskGroup {
     @NotBlank(message = "Task group's description must not be empty")
     private String description;
     private boolean done;
-    @Embedded
-    private Audit audit = new Audit(); // inject updatedOn and createdOn fields with @Embedded
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "group", fetch = FetchType.LAZY) // "group" from Task.class
     private Set<Task> tasks;
 
