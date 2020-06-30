@@ -2,7 +2,6 @@ package com.example.januush.todolistapp.model;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,6 +14,8 @@ public interface TaskRepository {
     Optional<Task> findById(Integer id); //TODO may not find any task exception
 
     boolean existsById(Integer id);
+
+    boolean existsByDoneIsFalseAndGroupId(Integer groupId);
 
     Task save(Task entity);
 
