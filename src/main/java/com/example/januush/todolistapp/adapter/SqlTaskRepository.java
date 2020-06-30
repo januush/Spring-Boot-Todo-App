@@ -1,5 +1,7 @@
-package com.example.januush.todolistapp.model;
+package com.example.januush.todolistapp.adapter;
 
+import com.example.januush.todolistapp.model.Task;
+import com.example.januush.todolistapp.model.TaskRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
