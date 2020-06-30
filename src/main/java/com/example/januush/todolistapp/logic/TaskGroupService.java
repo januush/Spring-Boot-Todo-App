@@ -11,7 +11,6 @@ import java.util.stream.Collectors;
 class TaskGroupService {
     @Autowired
     List<String> temp(TaskGroupRepository repository) {
-        // FIXME: This way too many sql queries would be run (because of lazy loading in TaskGroup.class
        return repository.findAll()
                 .stream()
                 .flatMap(taskGroup -> taskGroup.getTasks().stream())
