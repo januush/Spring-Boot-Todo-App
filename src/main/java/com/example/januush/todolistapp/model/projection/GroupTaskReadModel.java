@@ -1,5 +1,29 @@
 package com.example.januush.todolistapp.model.projection;
 
-// Modele do konkretnych wariantów użycia. Co innego gdy odczytujemy taska w obrębie grupy a co innego gdy chcemy zapisać taska razem z grupą.
-class GroupTaskReadModel {
+import com.example.januush.todolistapp.model.Task;
+
+public class GroupTaskReadModel {
+    private boolean done;
+    private String description;
+
+    GroupTaskReadModel(Task source) {
+        description = source.getDescription();
+        done = source.isDone();
+    }
+
+    public boolean isDone() {
+        return done;
+    }
+
+    public void setDone(final boolean done) {
+        this.done = done;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(final String description) {
+        this.description = description;
+    }
 }
