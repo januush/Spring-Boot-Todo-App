@@ -5,7 +5,7 @@ import com.example.januush.todolistapp.model.TaskGroup;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-class GroupWriteModel {
+public class GroupWriteModel {
     private String description;
     private Set<GroupTaskWriteModel> tasks;
 

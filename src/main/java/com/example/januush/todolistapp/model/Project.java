@@ -41,9 +41,9 @@ public class Project {
         this.groups = groups;
     }
 
-    Set<ProjectStep> getSteps() {
+    public Set<ProjectStep> getSteps() {
         return steps;
-    }
+    } //TODO return copy of steps for safety
 
     void setSteps(final Set<ProjectStep> steps) {
         this.steps = steps;
