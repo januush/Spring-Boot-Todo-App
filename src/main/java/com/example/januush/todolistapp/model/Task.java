@@ -24,6 +24,11 @@ public class Task {
 		// Empty constructor used by Hibernate to create single Entity
 	}
 
+	public Task(String description, LocalDateTime deadline) {
+		this.deadline = deadline;
+		this.description = description;
+	}
+
 	public int getId() {
 		return id;
 	}
