@@ -15,6 +15,9 @@ public class TaskGroup {
     private boolean done;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "group", fetch = FetchType.LAZY) // "group" from Task.class
     private Set<Task> tasks;
+    @ManyToOne
+    @JoinColumn(name = "project_id")
+    private Project project;
 
     TaskGroup() {
         // Empty constructor used by Hibernate to create single Entity
@@ -50,5 +53,13 @@ public class TaskGroup {
 
     void setTasks(final Set<Task> tasks) {
         this.tasks = tasks;
+    }
+
+    Project getProject() {
+        return project;
+    }
+
+    void setProject(final Project project) {
+        this.project = project;
     }
 }
