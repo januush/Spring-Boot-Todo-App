@@ -29,15 +29,15 @@ public class Project {
         return description;
     }
 
-    void setDescription(final String description) {
+    public void setDescription(final String description) {
         this.description = description;
     }
 
-    Set<TaskGroup> getGroups() {
+    public Set<TaskGroup> getGroups() {
         return groups;
     }
 
-    void setGroups(final Set<TaskGroup> groups) {
+    public void setGroups(final Set<TaskGroup> groups) {
         this.groups = groups;
     }
 

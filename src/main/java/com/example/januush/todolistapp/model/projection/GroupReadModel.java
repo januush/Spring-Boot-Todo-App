@@ -4,7 +4,6 @@ import com.example.januush.todolistapp.model.Task;
 import com.example.januush.todolistapp.model.TaskGroup;
 
 import java.time.LocalDateTime;
-import java.util.Comparator;
 import java.util.Set;
 import java.util.stream.Collectors;
 

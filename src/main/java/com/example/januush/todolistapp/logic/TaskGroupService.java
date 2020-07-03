@@ -19,7 +19,7 @@ public class TaskGroupService {
     private TaskGroupRepository repository;
     private TaskRepository taskRepository;
 
-    TaskGroupService(final TaskGroupRepository repository) {
+    TaskGroupService(final TaskGroupRepository repository, final TaskRepository taskRepository) {
         this.repository = repository;
         this.taskRepository = taskRepository;
     }
