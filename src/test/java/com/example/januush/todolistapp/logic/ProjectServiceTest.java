@@ -41,10 +41,30 @@ class ProjectServiceTest {
 		// given
 		var mockProjectRepository = mock(ProjectRepository.class);
 		when(mockProjectRepository.findById(anyInt())).thenReturn(Optional.empty());
+		var mockGroupRepository = groupRepositoryReturning(true);
 		// and
 		TaskConfigurationProperties mockConfig = configurationReturning(true);
 		var toTest = new ProjectService(null, mockProjectRepository, mockConfig);
 
+		// when
+		var exception = catchThrowable(() -> toTest.createGroup(LocalDateTime.now(), 0));
+		// then
+		assertThat(exception)
+				.isInstanceOf(IllegalArgumentException.class)
+				.hasMessageContaining("id not found");
+	}
+
+	@Test
+	@DisplayName("should throw IllegalArgumentException when configured to allow just 1 group and no groups and no projects for a given id")
+	void createGroup_noMultipleGroupsConfig_And_noUndoneGroupExists_noProjects_throwsIllegalArgumentException() {
+		// given
+		var mockProjectRepository = mock(ProjectRepository.class);
+		when(mockProjectRepository.findById(anyInt())).thenReturn(Optional.empty());
+		// and
+		var mockGroupRepository = groupRepositoryReturning(false);
+		// and
+		TaskConfigurationProperties mockConfig = configurationReturning(true);
+		var toTest = new ProjectService(mockGroupRepository, mockProjectRepository, mockConfig);
 		// when
 		var exception = catchThrowable(() -> toTest.createGroup(LocalDateTime.now(), 0));
 		// then
@@ -60,5 +80,11 @@ class ProjectServiceTest {
 		var mockConfig = mock(TaskConfigurationProperties.class);
 		when(mockConfig.getTemplate()).thenReturn(mockTemplate);
 		return mockConfig;
+	}
+
+	private TaskGroupRepository groupRepositoryReturning(final boolean result) {
+		var mockGroupRepository = mock(TaskGroupRepository.class);
+		when(mockGroupRepository.existsByDoneIsFalseAndProject_Id(anyInt())).thenReturn(result);
+		return mockGroupRepository;
 	}
 }
