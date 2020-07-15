@@ -28,12 +28,9 @@ class TaskController {
 	}
 
 	@GetMapping(value = "/tasks",params = {"!sort", "!page", "!size"}) // called instead of findAll from Repository when no other params are specified
-	public ResponseEntity<CollectionModel<Task>> readAllTasks() {
-		List<Task> collection = repository.findAll();
-		CollectionModel<Task> resources = new CollectionModel<>(collection);
-		resources.add(linkTo(methodOn(TaskController.class).readAllTasks()).withSelfRel());
+	public ResponseEntity<List<Task>> readAllTasks() {
 		logger.warn("Exposing all the tasks");
-		return ResponseEntity.ok(resources);
+		return ResponseEntity.ok(repository.findAll());
 	}
 
 	@GetMapping("/tasks")
