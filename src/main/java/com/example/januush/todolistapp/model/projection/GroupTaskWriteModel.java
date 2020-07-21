@@ -5,7 +5,7 @@ import com.example.januush.todolistapp.model.TaskGroup;
 
 import java.time.LocalDateTime;
 
-class GroupTaskWriteModel {
+public class GroupTaskWriteModel {
     private String description;
     private LocalDateTime deadline;
 
