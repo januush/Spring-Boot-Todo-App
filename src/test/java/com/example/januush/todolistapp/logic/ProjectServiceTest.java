@@ -85,11 +85,12 @@ class ProjectServiceTest {
 		when(mockRepository.findById(anyInt())).thenReturn(Optional.of(project));
 		// and
 		InMemoryGroupRepository inMemoryGroupRepo = inMemoryGroupRepository();
+		var serviceWithInMemoryRepo = new TaskGroupService(inMemoryGroupRepo, null);
 		int countBeforeCall = inMemoryGroupRepo.count();
 		// and
 		TaskConfigurationProperties mockConfig = configurationReturning(true);
 		// system under test
-		var toTest = new ProjectService(inMemoryGroupRepo, mockRepository, mockConfig, null);
+		var toTest = new ProjectService(inMemoryGroupRepo, mockRepository, mockConfig, serviceWithInMemoryRepo);
 		// when
 		GroupReadModel result = toTest.createGroup(today, 1);
 		// then
