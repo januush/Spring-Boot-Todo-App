@@ -1,6 +1,7 @@
 package com.example.januush.todolistapp.model.projection;
 
 import com.example.januush.todolistapp.model.Task;
+import com.example.januush.todolistapp.model.TaskGroup;
 
 import java.time.LocalDateTime;
 
@@ -24,7 +25,7 @@ class GroupTaskWriteModel {
         this.deadline = deadline;
     }
 
-    public Task toTask() {
-        return new Task(description, deadline);
+    public Task toTask(final TaskGroup group) {
+        return new Task(description, deadline, group);
     }
 }
