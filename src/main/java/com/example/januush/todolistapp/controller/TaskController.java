@@ -19,6 +19,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
+@RequestMapping("/tasks")
 class TaskController {
 	private static final Logger logger = LoggerFactory.getLogger(TaskController.class);
 	private final TaskRepository repository;
@@ -27,19 +28,19 @@ class TaskController {
 		this.repository = repository;
 	}
 
-	@GetMapping(value = "/tasks",params = {"!sort", "!page", "!size"}) // called instead of findAll from Repository when no other params are specified
+	@GetMapping(params = {"!sort", "!page", "!size"}) // called instead of findAll from Repository when no other params are specified
 	public ResponseEntity<List<Task>> readAllTasks() {
 		logger.warn("Exposing all the tasks");
 		return ResponseEntity.ok(repository.findAll());
 	}
 
-	@GetMapping("/tasks")
+	@GetMapping
 	ResponseEntity<List<Task>> readAllTasks(Pageable pageable) {
 		logger.info("Custom pageable");
 		return ResponseEntity.ok(repository.findAll(pageable).getContent());
 	}
 
-	@GetMapping("/tasks/{id}")
+	@GetMapping("/{id}")
 	ResponseEntity<Task> readOneTask(@PathVariable("id") int taskId) {
 		logger.info("Exposing one task");
 		return repository.findById(taskId)
@@ -47,7 +48,7 @@ class TaskController {
 				.orElse(ResponseEntity.notFound().build());
 	}
 
-	@PutMapping("/tasks/{id}")
+	@PutMapping("/{id}")
 	ResponseEntity<?> updateTask(@PathVariable("id") int taskId, @RequestBody @Valid Task taskToUpdate) {
 		logger.info("Updating one task");
 		if (!repository.existsById(taskId)) {
@@ -61,7 +62,7 @@ class TaskController {
 		return ResponseEntity.noContent().build();
 	}
 
-	@PostMapping("/tasks")
+	@PostMapping
 	ResponseEntity<Task> createTask(@RequestBody @Valid Task taskToAdd) throws URISyntaxException {
 		logger.info("Creating new task");
 		Task result = repository.save(taskToAdd);
@@ -69,7 +70,7 @@ class TaskController {
 	}
 
 	@Transactional
-	@PatchMapping("/tasks/{id}")
+	@PatchMapping("/{id}")
 	public ResponseEntity<?> toggleTask (@PathVariable int id) {
 		if (!repository.existsById(id)) {
 			return ResponseEntity.notFound().build();
@@ -77,5 +78,12 @@ class TaskController {
 		repository.findById(id)
 				.ifPresent(task -> task.setDone(!task.isDone()));
 		return ResponseEntity.noContent().build();
+	}
+
+	@GetMapping("/search/done")
+	ResponseEntity<List<Task>> readDoneTasks(@RequestParam(defaultValue = "true") boolean state) {
+		return ResponseEntity.ok(
+				repository.findByDone(state)
+		);
 	}
 }
