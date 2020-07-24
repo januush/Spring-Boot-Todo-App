@@ -1,5 +1,6 @@
 package com.example.januush.todolistapp.logic;
 
+import com.example.januush.todolistapp.model.Project;
 import com.example.januush.todolistapp.model.TaskGroup;
 import com.example.januush.todolistapp.model.TaskGroupRepository;
 import com.example.januush.todolistapp.model.TaskRepository;
@@ -25,7 +26,11 @@ public class TaskGroupService {
     }
 
     public GroupReadModel createGroup(final GroupWriteModel source) {
-        TaskGroup result = repository.save(source.toGroup());
+        return createGroup(source, null);
+    }
+
+    GroupReadModel createGroup(final GroupWriteModel source, final Project project) {
+        TaskGroup result = repository.save(source.toGroup(project));
         return new GroupReadModel(result);
     }
 

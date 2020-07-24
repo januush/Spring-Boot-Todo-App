@@ -49,7 +49,7 @@ public class Project {
         return steps;
     } //TODO return copy of steps for safety
 
-    void setSteps(final Set<ProjectStep> steps) {
+    public void setSteps(final Set<ProjectStep> steps) {
         this.steps = steps;
     }
 }

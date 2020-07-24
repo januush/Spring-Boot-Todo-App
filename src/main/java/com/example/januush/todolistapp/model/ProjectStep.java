@@ -31,4 +31,20 @@ public class ProjectStep {
     Project getProject() {
         return project;
     }
+
+    void setId(final int id) {
+        this.id = id;
+    }
+
+    public void setDescription(final String description) {
+        this.description = description;
+    }
+
+    public void setDaysToDeadline(final int daysToDeadline) {
+        this.daysToDeadline = daysToDeadline;
+    }
+
+    public void setProject(final Project project) {
+        this.project = project;
+    }
 }
