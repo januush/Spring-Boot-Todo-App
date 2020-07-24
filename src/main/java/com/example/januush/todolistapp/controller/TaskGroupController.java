@@ -18,7 +18,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/groups")
 class TaskGroupController {
-	private static final Logger logger = LoggerFactory.getLogger(TaskController.class);
+	private static final Logger logger = LoggerFactory.getLogger(TaskGroupController.class);
 	private final TaskGroupService taskGroupService;
 	private final TaskRepository taskRepository;
 
@@ -31,7 +31,7 @@ class TaskGroupController {
 	ResponseEntity<GroupReadModel> createGroup(@RequestBody @Valid GroupWriteModel source) {
 		logger.info("Creating new task group");
 		GroupReadModel result = taskGroupService.createGroup(source);
-		return ResponseEntity.created(URI.create("/" + result.getId())).body(taskGroupService.createGroup(source));
+		return ResponseEntity.created(URI.create("/" + result.getId())).body(result);
 	}
 
 	@GetMapping
@@ -50,4 +50,14 @@ class TaskGroupController {
 		taskGroupService.toggleGroup(id);
 		return ResponseEntity.noContent().build();
 	}
+
+	@ExceptionHandler(IllegalArgumentException.class)
+    ResponseEntity<String> handleIllegalArgument(IllegalArgumentException e) {
+	    return ResponseEntity.notFound().build();
+    }
+
+    @ExceptionHandler(IllegalStateException.class)
+    ResponseEntity<String> handleIllegalArgument(IllegalStateException e) {
+        return ResponseEntity.badRequest().body(e.getMessage());
+    }
 }

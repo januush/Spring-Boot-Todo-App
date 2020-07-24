@@ -40,7 +40,6 @@ public class TaskGroupService {
         if (taskRepository.existsByDoneIsFalseAndGroupId(groupId)) {
             throw new IllegalStateException("Group has undone tasks.");
         }
-        // TODO Exception handling
         TaskGroup result = repository.findById(groupId).orElseThrow(() -> new IllegalArgumentException("TaskGroup with given id not found"));
         result.setDone(!result.isDone());
         repository.save(result);
