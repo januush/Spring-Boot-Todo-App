@@ -5,6 +5,7 @@ import com.example.januush.todolistapp.model.*;
 import com.example.januush.todolistapp.model.projection.GroupReadModel;
 import com.example.januush.todolistapp.model.projection.GroupTaskWriteModel;
 import com.example.januush.todolistapp.model.projection.GroupWriteModel;
+import com.example.januush.todolistapp.model.projection.ProjectWriteModel;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -29,8 +30,8 @@ public class ProjectService {
         return projectRepository.findAll();
     }
 
-    public Project save(Project toSave) {
-        return projectRepository.save(toSave);
+    public Project save(ProjectWriteModel toSave) {
+        return projectRepository.save(toSave.toProject());
     }
 
     public GroupReadModel createGroup(LocalDateTime deadline, int projectId) {
