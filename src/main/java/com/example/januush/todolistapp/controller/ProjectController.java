@@ -11,9 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 class ProjectController {
     @GetMapping
     String showProjects(Model model) {
-        var projectToEdit = new ProjectWriteModel();
-        projectToEdit.setDescription("test");
-        model.addAttribute("project", projectToEdit);
+        model.addAttribute("project", new ProjectWriteModel());
         return "projects"; // When returning String, Spring is looking if there is any template
     }
 }
