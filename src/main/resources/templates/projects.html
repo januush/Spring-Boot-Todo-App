@@ -29,7 +29,9 @@
 </head>
 <body>
 <main>
+    <!--/*@thymesVar id="message" type="java.lang.String"*/-->
     <h1 th:if="${message != null}" th:text="${message}"></h1>
+    <!--/*@thymesVar id="projects" type="java.util.List<com.example.januush.todolistapp.model.Project>"*/-->
     <dl th:each="project: ${projects}" class="Bd P(10px)">
         <dt th:text="${project.description}">...</dt>
         <dd>
@@ -44,8 +46,8 @@
             </form>
         </dd>
     </dl>
-    <!--/*@thymesVar id="project" type="com.example.januush.todolistapp.model.projection.ProjectWriteModel"*/-->
         <fieldset>
+            <!--/*@thymesVar id="project" type="com.example.januush.todolistapp.model.projection.ProjectWriteModel"*/-->
             <form action="#" method="post" th:action="@{/projects}" th:object="${project}">
                 <p class="C(red)" th:if="${#fields.hasAnyErrors()}" th:errors="*{all}"></p>
                 <legend>Nowy projekt</legend>
