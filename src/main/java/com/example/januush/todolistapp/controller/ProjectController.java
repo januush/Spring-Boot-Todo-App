@@ -1,6 +1,7 @@
 package com.example.januush.todolistapp.controller;
 
 import com.example.januush.todolistapp.logic.ProjectService;
+import com.example.januush.todolistapp.model.Project;
 import com.example.januush.todolistapp.model.ProjectStep;
 import com.example.januush.todolistapp.model.projection.ProjectWriteModel;
 import org.springframework.stereotype.Controller;
@@ -9,6 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/projects")
@@ -39,5 +42,10 @@ class ProjectController {
     String addProjectStep(@ModelAttribute("project") ProjectWriteModel currentProjectModel) {
         currentProjectModel.getSteps().add(new ProjectStep());
         return "projects";
+    }
+
+    @ModelAttribute("projects")
+    List<Project> getProjects() {
+        return service.readAll();
     }
 }

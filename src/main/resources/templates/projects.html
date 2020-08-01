@@ -9,6 +9,14 @@
 <body>
 <main>
     <h1 th:if="${message != null}" th:text="${message}"></h1>
+    <dl th:each="project: ${projects}">
+        <dt th:text="${project.description}">...</dt>
+        <dd>
+            <ul>
+                <li th:each="step :${project.steps}" th:text="|${step.description} (${step.daysToDeadline}) dni|"></li>
+            </ul>
+        </dd>
+    </dl>
     <!--/*@thymesVar id="project" type="com.example.januush.todolistapp.model.projection.ProjectWriteModel"*/-->
     <form action="#" method="post" th:action="@{/projects}" th:object="${project}">
         <fieldset>
