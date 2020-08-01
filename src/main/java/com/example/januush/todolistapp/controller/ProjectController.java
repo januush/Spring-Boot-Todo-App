@@ -41,6 +41,7 @@ class ProjectController {
         // after adding we must have new ProjectWriteModel
         service.save(currentProjectModel);
         model.addAttribute("project", new ProjectWriteModel());
+        model.addAttribute("projects", getProjects());
         model.addAttribute("message", "Dodano projekt!");
         return "projects";
 
