@@ -1,7 +1,6 @@
 package com.example.januush.todolistapp.controller;
 
 import com.example.januush.todolistapp.logic.TaskGroupService;
-import com.example.januush.todolistapp.model.ProjectStep;
 import com.example.januush.todolistapp.model.Task;
 import com.example.januush.todolistapp.model.TaskRepository;
 import com.example.januush.todolistapp.model.projection.GroupReadModel;
@@ -22,6 +21,7 @@ import java.net.URI;
 import java.util.List;
 
 @Controller
+@IllegalExceptionProcessing
 @RequestMapping("/groups")
 class TaskGroupController {
 	private static final Logger logger = LoggerFactory.getLogger(TaskGroupController.class);
