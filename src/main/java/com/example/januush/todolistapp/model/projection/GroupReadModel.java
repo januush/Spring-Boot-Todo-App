@@ -4,6 +4,7 @@ import com.example.januush.todolistapp.model.Task;
 import com.example.januush.todolistapp.model.TaskGroup;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -21,7 +22,8 @@ public class GroupReadModel {
 		description = source.getDescription();
 		source.getTasks().stream()
 				.map(Task::getDeadline)
-				.max(LocalDateTime::compareTo)// FIXME compareTo on null obj
+				.filter(Objects::nonNull)
+				.max(LocalDateTime::compareTo)
 				.ifPresent(date -> deadline = date);
 		tasks = source.getTasks().stream()
 				.map(GroupTaskReadModel::new)
