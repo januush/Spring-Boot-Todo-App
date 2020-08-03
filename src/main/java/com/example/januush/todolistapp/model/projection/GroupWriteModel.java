@@ -3,12 +3,16 @@ package com.example.januush.todolistapp.model.projection;
 import com.example.januush.todolistapp.model.Project;
 import com.example.januush.todolistapp.model.TaskGroup;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class GroupWriteModel {
+    @NotBlank(message = "Task group's description must not be empty")
     private String description;
+    @Valid
     private List<GroupTaskWriteModel> tasks = new ArrayList<>();
 
     public GroupWriteModel() {
