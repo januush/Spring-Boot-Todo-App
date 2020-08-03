@@ -8,6 +8,7 @@ import com.example.januush.todolistapp.model.projection.GroupWriteModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +16,7 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/groups")
 class TaskGroupController {
 	private static final Logger logger = LoggerFactory.getLogger(TaskGroupController.class);
@@ -27,6 +28,7 @@ class TaskGroupController {
 		this.taskRepository = taskRepository;
 	}
 
+	@ResponseBody
 	@PostMapping
 	ResponseEntity<GroupReadModel> createGroup(@RequestBody @Valid GroupWriteModel source) {
 		logger.info("Creating new task group");
@@ -34,16 +36,19 @@ class TaskGroupController {
 		return ResponseEntity.created(URI.create("/" + result.getId())).body(result);
 	}
 
+	@ResponseBody
 	@GetMapping
 	ResponseEntity<List<GroupReadModel>> readAllGroups() {
 		return ResponseEntity.ok(taskGroupService.readAll());
 	}
 
+	@ResponseBody
 	@GetMapping("/{id}/tasks")
 	ResponseEntity<List<Task>> readAllTasksFromGroup(@PathVariable int id) {
 		return ResponseEntity.ok(taskRepository.findAllByGroup_Id(id));
 	}
 
+	@ResponseBody
 	@Transactional
 	@PatchMapping("/{id}")
 	public ResponseEntity<?> toggleGroup (@PathVariable int id) {
