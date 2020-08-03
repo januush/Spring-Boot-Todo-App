@@ -21,7 +21,7 @@ public class GroupReadModel {
 		description = source.getDescription();
 		source.getTasks().stream()
 				.map(Task::getDeadline)
-				.max(LocalDateTime::compareTo)
+				.max(LocalDateTime::compareTo)// FIXME compareTo on null obj
 				.ifPresent(date -> deadline = date);
 		tasks = source.getTasks().stream()
 				.map(GroupTaskReadModel::new)
