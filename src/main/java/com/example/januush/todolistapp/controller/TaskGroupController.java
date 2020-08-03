@@ -7,9 +7,11 @@ import com.example.januush.todolistapp.model.projection.GroupReadModel;
 import com.example.januush.todolistapp.model.projection.GroupWriteModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -28,8 +30,14 @@ class TaskGroupController {
 		this.taskRepository = taskRepository;
 	}
 
+	@GetMapping(produces = MediaType.TEXT_HTML_VALUE)
+	String showGroups(Model model) {
+		model.addAttribute("group", new GroupWriteModel());
+		return "groups";
+	}
+
 	@ResponseBody
-	@PostMapping
+	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	ResponseEntity<GroupReadModel> createGroup(@RequestBody @Valid GroupWriteModel source) {
 		logger.info("Creating new task group");
 		GroupReadModel result = taskGroupService.createGroup(source);
@@ -37,20 +45,20 @@ class TaskGroupController {
 	}
 
 	@ResponseBody
-	@GetMapping
+	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	ResponseEntity<List<GroupReadModel>> readAllGroups() {
 		return ResponseEntity.ok(taskGroupService.readAll());
 	}
 
 	@ResponseBody
-	@GetMapping("/{id}/tasks")
+	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	ResponseEntity<List<Task>> readAllTasksFromGroup(@PathVariable int id) {
 		return ResponseEntity.ok(taskRepository.findAllByGroup_Id(id));
 	}
 
 	@ResponseBody
 	@Transactional
-	@PatchMapping("/{id}")
+	@PatchMapping(value = "/{id}")
 	public ResponseEntity<?> toggleGroup (@PathVariable int id) {
 		taskGroupService.toggleGroup(id);
 		return ResponseEntity.noContent().build();
