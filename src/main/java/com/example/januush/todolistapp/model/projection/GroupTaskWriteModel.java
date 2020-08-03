@@ -2,6 +2,7 @@ package com.example.januush.todolistapp.model.projection;
 
 import com.example.januush.todolistapp.model.Task;
 import com.example.januush.todolistapp.model.TaskGroup;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
@@ -9,6 +10,7 @@ import java.time.LocalDateTime;
 public class GroupTaskWriteModel {
     @NotBlank(message = "Task's description must not be empty")
     private String description;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime deadline;
 
     public String getDescription() {

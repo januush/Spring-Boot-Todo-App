@@ -9,6 +9,7 @@ import com.example.januush.todolistapp.model.projection.GroupWriteModel;
 import org.springframework.web.context.annotation.RequestScope;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -37,6 +38,7 @@ public class TaskGroupService {
     public List<GroupReadModel> readAll() {
         return repository.findAll()
                 .stream()
+                .filter(Objects::nonNull)
                 .map(GroupReadModel::new)
                 .collect(Collectors.toList());
     }
