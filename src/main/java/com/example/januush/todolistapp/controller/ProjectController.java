@@ -6,6 +6,7 @@ import com.example.januush.todolistapp.model.ProjectStep;
 import com.example.januush.todolistapp.model.projection.ProjectWriteModel;
 import io.micrometer.core.annotation.Timed;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,9 +26,12 @@ class ProjectController {
     }
 
     @GetMapping
-    String showProjects(Model model) {
-        model.addAttribute("project", new ProjectWriteModel());
-        return "projects"; // When returning String, Spring is looking if there is any template
+    String showProjects(Model model, Authentication auth) {
+        if (auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
+            model.addAttribute("project", new ProjectWriteModel());
+            return "projects";
+        }
+        return "index";
     }
 
     @PostMapping
